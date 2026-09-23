@@ -29,20 +29,3 @@ spring:
           filters:
             - StripPrefix=2
 
-//a cambiar o en proceso ns si vamos a usar swagger.
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-    enabled: true
-    operationsSorter: alpha
-    tagsSorter: alpha
-    urls:
-      - name: ms-alumnos
-        url: /api/alumnos/v3/api-docs
-      - name: ms-cursos
-        url: /api/cursos/v3/api-docs
-      - name: ms-administracion
-        url: /api/administracion/v3/api-docs
-  enable-native-support: true
-  api-docs:
-    enabled: true
