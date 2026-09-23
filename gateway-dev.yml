@@ -1,0 +1,48 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: ms-productos
+          uri: lb://MS-PRODUCTOS
+          predicates:
+            - Path=/api/productos/**
+          filters:
+            - StripPrefix=2
+        - id: ms-facturacion
+          uri: lb://MS-FACTURACION
+          predicates:
+            - Path=/api/facturacion/**
+          filters:
+            - StripPrefix=2
+        - id: ms-stock
+          uri: lb://MS-STOCK
+          predicates:
+            - Path=/api/stock/**
+          filters:
+            - StripPrefix=2
+
+//a cambiar o en proceso ns si vamos a usar swagger.
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+    operationsSorter: alpha
+    tagsSorter: alpha
+    urls:
+      - name: ms-alumnos
+        url: /api/alumnos/v3/api-docs
+      - name: ms-cursos
+        url: /api/cursos/v3/api-docs
+      - name: ms-administracion
+        url: /api/administracion/v3/api-docs
+  enable-native-support: true
+  api-docs:
+    enabled: true
