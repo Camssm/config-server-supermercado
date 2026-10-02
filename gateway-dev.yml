@@ -34,10 +34,6 @@ spring:
 
       routes:
 
-        # =========================
-        # SWAGGER
-        # =========================
-
         - id: ms-security-docs
           uri: lb://SECURITY-SERVICE
           predicates:
@@ -66,18 +62,10 @@ spring:
           filters:
             - RewritePath=/api/facturas/v3/api-docs, /v3/api-docs
 
-        # =========================
-        # SECURITY
-        # =========================
-
         - id: ms-security
           uri: lb://SECURITY-SERVICE
           predicates:
             - Path=/auth/**
-
-        # =========================
-        # PRODUCTOS
-        # =========================
 
         - id: ms-productos
           uri: lb://MS-PRODUCTOS
@@ -86,20 +74,12 @@ spring:
           filters:
             - AuthenticationFilter
 
-        # =========================
-        # STOCK
-        # =========================
-
         - id: ms-stock
           uri: lb://MS-STOCK
           predicates:
             - Path=/api/stock/**
           filters:
             - AuthenticationFilter
-
-        # =========================
-        # FACTURAS
-        # =========================
 
         - id: ms-facturas
           uri: lb://MS-FACTURAS
