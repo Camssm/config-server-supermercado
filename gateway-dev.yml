@@ -2,30 +2,149 @@ server:
   port: 8080
 
 spring:
-  application:
-    name: api-gateway
   cloud:
     gateway:
+
       discovery:
         locator:
           enabled: true
+
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+
+        cors-configurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:4200"
+
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+
+            allowedHeaders:
+              - "*"
+
+            allowCredentials: true
+
+      default-filters:
+        - AddRequestHeader=X-Gateway-Secret, ${gateway.internal-secret}
+
       routes:
+
+        # =========================
+        # SWAGGER
+        # =========================
+
+        - id: ms-security-docs
+          uri: lb://SECURITY-SERVICE
+          predicates:
+            - Path=/auth/v3/api-docs
+          filters:
+            - RewritePath=/auth/v3/api-docs, /v3/api-docs
+
+        - id: ms-productos-docs
+          uri: lb://MS-PRODUCTOS
+          predicates:
+            - Path=/api/productos/v3/api-docs
+          filters:
+            - RewritePath=/api/productos/v3/api-docs, /v3/api-docs
+
+        - id: ms-stock-docs
+          uri: lb://MS-STOCK
+          predicates:
+            - Path=/api/stock/v3/api-docs
+          filters:
+            - RewritePath=/api/stock/v3/api-docs, /v3/api-docs
+
+        - id: ms-facturas-docs
+          uri: lb://MS-FACTURAS
+          predicates:
+            - Path=/api/facturas/v3/api-docs
+          filters:
+            - RewritePath=/api/facturas/v3/api-docs, /v3/api-docs
+
+        # =========================
+        # SECURITY
+        # =========================
+
+        - id: ms-security
+          uri: lb://SECURITY-SERVICE
+          predicates:
+            - Path=/auth/**
+
+        # =========================
+        # PRODUCTOS
+        # =========================
+
         - id: ms-productos
           uri: lb://MS-PRODUCTOS
           predicates:
             - Path=/api/productos/**
           filters:
-            - StripPrefix=2
-        - id: ms-facturacion
-          uri: lb://MS-FACTURACION
-          predicates:
-            - Path=/api/facturacion/**
-          filters:
-            - StripPrefix=2
+            - AuthenticationFilter
+
+        # =========================
+        # STOCK
+        # =========================
+
         - id: ms-stock
           uri: lb://MS-STOCK
           predicates:
             - Path=/api/stock/**
           filters:
-            - StripPrefix=2
+            - AuthenticationFilter
 
+        # =========================
+        # FACTURAS
+        # =========================
+
+        - id: ms-facturas
+          uri: lb://MS-FACTURAS
+          predicates:
+            - Path=/api/facturas/**
+          filters:
+            - AuthenticationFilter
+
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+    operationsSorter: alpha
+    tagsSorter: alpha
+
+    urls:
+      - name: ms-security
+        url: /auth/v3/api-docs
+
+      - name: ms-productos
+        url: /api/productos/v3/api-docs
+
+      - name: ms-stock
+        url: /api/stock/v3/api-docs
+
+      - name: ms-facturas
+        url: /api/facturas/v3/api-docs
+
+  enable-native-support: true
+
+  api-docs:
+    enabled: true
+
+
+gateway:
+  internal-secret: "Sabri67Mayra127Solange6Camila9"
+
+jwt:
+  secret: "Xpa6kTllXDbM5JL2UhKFCPdQHkvY5IlB0z+lORCbXc4="
+
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
