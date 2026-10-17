@@ -1,18 +1,23 @@
 server:
-  port: 8083
+  port: 8082
 
 spring:
   application:
     name: MS-FACTURACION
 
   datasource:
-    url: jdbc:mysql://localhost:3306/adefinirx3
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password:
+    url: jdbc:h2:mem:facturaciondb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
 
   jpa:
-    database-platform: org.hibernate.dialect.MySQLDialect
+    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: update
 
