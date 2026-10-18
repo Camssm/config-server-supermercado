@@ -40,3 +40,6 @@ management:
   endpoint:
     health:
       show-details: always
+
+gateway:
+  internal-secret: "${GATEWAY_INTERNAL_SECRET}"
