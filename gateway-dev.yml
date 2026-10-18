@@ -28,7 +28,6 @@ spring:
         - AddRequestHeader=X-Gateway-Secret, ${gateway.internal-secret}
 
       routes:
-        # DOCUMENTACIÓN SWAGGER
 
         - id: ms-security-docs
           uri: lb://MS-SECURITY
@@ -58,7 +57,6 @@ spring:
           filters:
             - RewritePath=/api/usuario/v3/api-docs, /v3/api-docs
 
-        # RUTAS DE LOS MICROSERVICIOS
 
         - id: ms-security
           uri: lb://MS-SECURITY
@@ -106,10 +104,10 @@ springdoc:
     enabled: true
 
 gateway:
-  internal-secret: "REEMPLAZAR_POR_UN_SECRETO_NUEVO"
+  internal-secret: "Sabri67Mayra127Solange6Camila9"
 
 jwt:
-  secret: "REEMPLAZAR_POR_UN_SECRETO_JWT_NUEVO"
+  secret: "Xpa6kTllXDbM5JL2UhKFCPdQHkvY5IlB0z+lORCbXc4="
 
 eureka:
   client:
