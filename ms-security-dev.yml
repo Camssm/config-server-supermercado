@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: security-service
+    name: ms-security
 
   config:
     import: "optional:configserver:http://localhost:8888"
