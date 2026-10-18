@@ -120,6 +120,9 @@ springdoc:
       - name: ms-facturas
         url: /api/facturas/v3/api-docs
 
+      - name: ms-usuario
+        url: /api/usuario/v3/api-docs
+
   enable-native-support: true
 
   api-docs:
