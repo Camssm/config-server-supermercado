@@ -42,4 +42,4 @@ management:
       show-details: always
 
 gateway:
-  internal-secret: "${GATEWAY_INTERNAL_SECRET}"
+  internal-secret: "Sabri67Mayra127Solange6Camila9"
