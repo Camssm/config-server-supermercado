@@ -43,12 +43,12 @@ spring:
           filters:
             - RewritePath=/api/productos/v3/api-docs, /v3/api-docs
 
-        - id: ms-facturacion-docs
+        - id: ms-facturacion
           uri: lb://MS-FACTURACION
           predicates:
-            - Path=/api/facturas/v3/api-docs
+            - Path=/api/facturacion/**
           filters:
-            - RewritePath=/api/facturas/v3/api-docs, /v3/api-docs
+            - AuthenticationFilter
 
         - id: ms-usuario-docs
           uri: lb://MS-USUARIO
