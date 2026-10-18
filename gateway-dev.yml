@@ -1,3 +1,4 @@
+
 server:
   port: 8080
 
@@ -43,12 +44,12 @@ spring:
           filters:
             - RewritePath=/api/productos/v3/api-docs, /v3/api-docs
 
-        - id: ms-facturacion
+        - id: ms-facturacion-docs
           uri: lb://MS-FACTURACION
           predicates:
-            - Path=/api/facturacion/**
+            - Path=/api/facturacion/v3/api-docs
           filters:
-            - AuthenticationFilter
+            - RewritePath=/api/facturacion/v3/api-docs, /v3/api-docs
 
         - id: ms-usuario-docs
           uri: lb://MS-USUARIO
@@ -56,7 +57,6 @@ spring:
             - Path=/api/usuario/v3/api-docs
           filters:
             - RewritePath=/api/usuario/v3/api-docs, /v3/api-docs
-
 
         - id: ms-security
           uri: lb://MS-SECURITY
@@ -73,7 +73,7 @@ spring:
         - id: ms-facturacion
           uri: lb://MS-FACTURACION
           predicates:
-            - Path=/api/facturas/**
+            - Path=/api/facturacion/**
           filters:
             - AuthenticationFilter
 
@@ -94,7 +94,7 @@ springdoc:
       - name: ms-productos
         url: /api/productos/v3/api-docs
       - name: ms-facturacion
-        url: /api/facturas/v3/api-docs
+        url: /api/facturacion/v3/api-docs
       - name: ms-usuario
         url: /api/usuario/v3/api-docs
 
@@ -105,7 +105,6 @@ springdoc:
 
 gateway:
   internal-secret: "Sabri67Mayra127Solange6Camila9"
-
 jwt:
   secret: "Xpa6kTllXDbM5JL2UhKFCPdQHkvY5IlB0z+lORCbXc4="
 
