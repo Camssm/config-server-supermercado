@@ -62,6 +62,11 @@ spring:
           filters:
             - RewritePath=/api/facturas/v3/api-docs, /v3/api-docs
 
+        - id: ms-usuario
+          uri: lb://MS-USUARIO
+          predicates:
+            - Path=/api/usuario/**
+
         - id: ms-security
           uri: lb://SECURITY-SERVICE
           predicates:
