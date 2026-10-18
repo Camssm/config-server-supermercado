@@ -4,38 +4,34 @@ server:
 spring:
   cloud:
     gateway:
-
       discovery:
         locator:
           enabled: true
 
       globalcors:
         add-to-simple-url-handler-mapping: true
-
         cors-configurations:
           '[/**]':
             allowedOrigins:
               - "http://localhost:4200"
-
             allowedMethods:
               - GET
               - POST
               - PUT
               - DELETE
               - OPTIONS
-
             allowedHeaders:
               - "*"
-
             allowCredentials: true
 
       default-filters:
         - AddRequestHeader=X-Gateway-Secret, ${gateway.internal-secret}
 
       routes:
+        # DOCUMENTACIÓN SWAGGER
 
         - id: ms-security-docs
-          uri: lb://SECURITY-SERVICE
+          uri: lb://MS-SECURITY
           predicates:
             - Path=/auth/v3/api-docs
           filters:
@@ -48,15 +44,8 @@ spring:
           filters:
             - RewritePath=/api/productos/v3/api-docs, /v3/api-docs
 
-        - id: ms-stock-docs
-          uri: lb://MS-STOCK
-          predicates:
-            - Path=/api/stock/v3/api-docs
-          filters:
-            - RewritePath=/api/stock/v3/api-docs, /v3/api-docs
-
-        - id: ms-facturas-docs
-          uri: lb://MS-FACTURAS
+        - id: ms-facturacion-docs
+          uri: lb://MS-FACTURACION
           predicates:
             - Path=/api/facturas/v3/api-docs
           filters:
@@ -69,8 +58,10 @@ spring:
           filters:
             - RewritePath=/api/usuario/v3/api-docs, /v3/api-docs
 
+        # RUTAS DE LOS MICROSERVICIOS
+
         - id: ms-security
-          uri: lb://SECURITY-SERVICE
+          uri: lb://MS-SECURITY
           predicates:
             - Path=/auth/**
 
@@ -81,15 +72,8 @@ spring:
           filters:
             - AuthenticationFilter
 
-        - id: ms-stock
-          uri: lb://MS-STOCK
-          predicates:
-            - Path=/api/stock/**
-          filters:
-            - AuthenticationFilter
-
-        - id: ms-facturas
-          uri: lb://MS-FACTURAS
+        - id: ms-facturacion
+          uri: lb://MS-FACTURACION
           predicates:
             - Path=/api/facturas/**
           filters:
@@ -106,20 +90,13 @@ springdoc:
     enabled: true
     operationsSorter: alpha
     tagsSorter: alpha
-
     urls:
       - name: ms-security
         url: /auth/v3/api-docs
-
       - name: ms-productos
         url: /api/productos/v3/api-docs
-
-      - name: ms-stock
-        url: /api/stock/v3/api-docs
-
-      - name: ms-facturas
+      - name: ms-facturacion
         url: /api/facturas/v3/api-docs
-
       - name: ms-usuario
         url: /api/usuario/v3/api-docs
 
@@ -128,13 +105,11 @@ springdoc:
   api-docs:
     enabled: true
 
-
 gateway:
-  internal-secret: "Sabri67Mayra127Solange6Camila9"
+  internal-secret: "REEMPLAZAR_POR_UN_SECRETO_NUEVO"
 
 jwt:
-  secret: "Xpa6kTllXDbM5JL2UhKFCPdQHkvY5IlB0z+lORCbXc4="
-
+  secret: "REEMPLAZAR_POR_UN_SECRETO_JWT_NUEVO"
 
 eureka:
   client:
